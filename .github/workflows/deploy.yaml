@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v5
       - name: Install Dependencies
         run: npm install
-      - name: Run Lint
+      - name: Run Build
         run: npm run build
       - name: List File
         run: ls -l dist
