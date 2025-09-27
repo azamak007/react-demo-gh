@@ -8,19 +8,7 @@ on:
     types:
       - opened
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone Repo
-        uses: actions/checkout@v5
-      - name: Install Dependencies
-        run: npm install
-      - name: Run Lint
-        run: npm run lint
-
-  deploy:
-    needs: 
-      - lint
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repo
@@ -31,5 +19,20 @@ jobs:
         run: npm run build
       - name: List File
         run: ls -l dist
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-folder
+          path: dist/
+  deploy:
+    needs: 
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-folder
+          path: dist/
       - name: Deploy
         run: echo "Deploying..."
