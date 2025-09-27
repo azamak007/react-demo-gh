@@ -1,0 +1,28 @@
+name: Deploy React CSR
+on: 
+  push:
+  workflow_dispatch:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v5
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Lint
+        run: npm run lint
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v5
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Lint
+        run: npm run build
+      - name: List File
+        run: ls -l dist
+      - name: Deploy
+        run: echo "Deploying..."
